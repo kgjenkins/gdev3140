@@ -1,3 +1,10 @@
+# Advanced QGIS Styles and Layouts
+
+A workshop for GDEV 3140, 2022-11-09 \
+Keith Jenkins, GIS Librarian at Mann Library \
+kgj2@cornell.edu
+
+
 # How to better visualize thousands of points?
 
 2020 automobile crash data derived from
@@ -52,26 +59,50 @@ Tompkins County fire station data derived from
 https://tcdata-tompkinscounty.opendata.arcgis.com/datasets/firestations
 
 - Open the layouts.qgz project
-
 - Add labels using the "PLACENAME" field
     - What can be improved about these labels???
     - Hint: Formatting tab
-
 - Open the existing print Layout 1 (Project menu > Layouts)
-
 - Add an inset map in the corner -- to show Tompkins county within NY
 
-Use themes to control different style configurations for the main and inset
-maps.
+We'll use named themes and styles to control different style configurations for the main and inset maps.  First, we'll create a theme for the main map that has the firestations.
 
-- In the main QGIS window, make sure all the layers are on.
-- Click the eye icon at top of Layers panel
-- ...
+- In the main QGIS window, make sure all the layers are on, including the fire stations.
+- Click the eye icon at top of Layers panel > Add theme... call it "fire stations"
+
+Now we'll create a theme that omits the fire stations, and just shows the border.
+
+- Uncheck the box to hide the fire station layer
+- Click the eye icon > Add theme... call it "border only"
+
+Now we'll configure each map in the layout to use these themes.
+
+- Switch to the layout window
+- Select the "Select/Move item" tool to select the main map on the layout
+- In the "Item Properties" panel, in the "Layers" section, check the box to "Follow map theme" and select "fire stations"
+- Select the inset map, and have it follow map theme "border only"
 
 
+## Using multiple styles for the same layer
 
-# Animations
+A "theme" in QGIS keeps track of which layers are visible, and which named style is applied to each layer.  Unless you explicitly create a named style for a layer, you are using the "default" style for that layer.  If you wanted to create two different themes, one with red fire station points, and one with blue fire station points, you could create two named styles for the layer:
 
-ship data from https://marinecadastre.gov/ais/
+- In the main QGIS window, right-click the "fire stations" layer name > Styles > Rename current... call it "red points"
+- Right-click the layer again > Styles > New Style... call it "blue points"
+- Change the color of the points to blue
+
+Now we can create a new theme using the blue points style:
+
+- Click the eye icon > Add theme... call it "blue fire stations"
+
+And to update our layout to use this blue theme:
+
+- In the layout window, set the main map to follow map theme "blue fire stations"
 
 
+## Changing the CRS of the inset map
+
+Each map item in a QGIS layout can have its own map projection.
+
+- Use the "Select/Move item" tool to select the inset map
+- In the Item Properties, set the CRS as desired.
